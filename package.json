@@ -1,14 +1,14 @@
 {
-  "name": "start-line",
+  "name": "startline",
   "version": "0.0.1",
-  "description": "readline with starting point for nodejs",
+  "description": "stream readline with starting point for nodejs",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/hex7c0/start-line.git"
+    "url": "git://github.com/hex7c0/startline.git"
   },
   "bugs": {
-    "url": "https://github.com/hex7c0/start-line/issues"
+    "url": "https://github.com/hex7c0/startline/issues"
   },
   "author": {
     "name": "hex7c0",
@@ -29,5 +29,5 @@
     "line"
   ],
   "license": "GPLv3",
-  "homepage": "https://github.com/hex7c0/start-line/"
+  "homepage": "https://github.com/hex7c0/startline/"
 }

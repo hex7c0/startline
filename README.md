@@ -1,17 +1,17 @@
-#start-line [![Build Status](https://travis-ci.org/hex7c0/start-line.svg?branch=master)](https://travis-ci.org/hex7c0/start-line) [![NPM version](https://badge.fury.io/js/start-line.svg)](http://badge.fury.io/js/start-line)
+#startline [![Build Status](https://travis-ci.org/hex7c0/startline.svg?branch=master)](https://travis-ci.org/hex7c0/startline) [![NPM version](https://badge.fury.io/js/startline.svg)](http://badge.fury.io/js/startline)
 
-readline with starting point for [nodejs](http://nodejs.org/).
+Stream readline with starting point for [nodejs](http://nodejs.org/).
 
 ## Installation
 
 Install through NPM
 
 ```
-npm install start-line
+npm install startline
 ```
 or
 ```
-git clone git://github.com/hex7c0/start-line.git
+git clone git://github.com/hex7c0/startline.git
 ```
 
 ## API
@@ -27,7 +27,7 @@ inside expressjs project
 
 #### Examples
 
-Take a look at my [examples](https://github.com/hex7c0/start-line/tree/master/examples)
+Take a look at my [examples](https://github.com/hex7c0/startline/tree/master/examples)
 
 ## License
 Copyright (c) 2014 hex7c0
