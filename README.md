@@ -16,8 +16,17 @@ git clone git://github.com/hex7c0/startline.git
 
 ## API
 
-inside expressjs project
+inside nodejs project
 ```js
+var readline = startline({
+    file: 'lorem.txt'
+});
+
+readline.on('line',function(line) {
+
+    console.log(line);
+    return;
+});
 
 ```
 
