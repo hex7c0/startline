@@ -1,6 +1,6 @@
 {
   "name": "startline",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "stream readline with starting point for nodejs",
   "main": "index.js",
   "repository": {
