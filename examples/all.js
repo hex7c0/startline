@@ -30,3 +30,8 @@ readline.on('line',function(line) {
     console.log(line);
     return;
 });
+readline.on('close',function(line) {
+
+    console.log('read ' + readline.head);
+    return;
+});
