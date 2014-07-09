@@ -1,6 +1,6 @@
 #startline [![Build Status](https://travis-ci.org/hex7c0/startline.svg?branch=master)](https://travis-ci.org/hex7c0/startline) [![NPM version](https://badge.fury.io/js/startline.svg)](http://badge.fury.io/js/startline)
 
-stream readline with starting point for [nodejs](http://nodejs.org/).
+stream readline with starting point for [nodejs](http://nodejs.org/). You can even encode a file with rc4 cipher
 
 ## Installation
 
@@ -29,6 +29,8 @@ readline.on('line',function(line) {
 });
 ```
 
+### methods
+
 get head of string (bytes readed)
 ```js
 readline.head
@@ -47,9 +49,8 @@ readline.read(start,end)
 ### startline(options)
 
  - `file` - **String** Path of file *(required)*
- - `arc4` - **String** Read a encrypted file *(default "disabled")*
- 
- - `encoding` - **utf8 | ascii | base64** File encoding *(default "utf8")*
+ - `arc4` - **String** Password for reading a encrypted file *(default "disabled")*
+ - `encoding` - **utf8 | ascii | base64 | null** File encoding *(default "null")*
  - `mode` - **String** File permission *(default "444")*
  - `start` - **Integer** Starting bytes *(default "entire file")*
  - `end` - **Integer** Ending bytes *(default "entire file")*
