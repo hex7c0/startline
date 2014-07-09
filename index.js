@@ -4,7 +4,7 @@
  * @module startline
  * @package startline
  * @subpackage main
- * @version 0.0.1
+ * @version 1.1.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -15,14 +15,16 @@
  */
 var fs = require('fs');
 var readline = require('readline');
-var EventEmitter = require('events').EventEmitter;
+var event = require('events').EventEmitter;
 var inherits = require('util').inherits;
+var eol = require('os').EOL;
+var rc4 = require('arc4');
 
 /*
  * functions
  */
 /**
- * build _stream interface
+ * build stream interface
  * 
  * @function interfac
  * @param {Object} options - various options. Check README.md
@@ -36,33 +38,44 @@ function interfac(options,start,end) {
     var end = parseInt(end);
     var go;
     if (end >= 0) {
-        go = readline.createInterface({
-            input: fs.createReadStream(options.file,{
-                flags: options.flag,
-                mode: options.mode,
-                encoding: options.encoding,
-                autoClose: options.autoClose,
-                start: start,
-                end: end,
-                fd: null,
-            }),
-            output: null,
-            terminal: false,
+        go = fs.createReadStream(options.file,{
+            flags: options.flag,
+            mode: options.mode,
+            encoding: options.encoding,
+            autoClose: options.autoClose,
+            start: start,
+            end: end,
+            fd: null,
         });
     } else {
-        go = readline.createInterface({
-            input: fs.createReadStream(options.file,{
-                flags: options.flag,
-                mode: options.mode,
-                encoding: options.encoding,
-                autoClose: options.autoClose,
-                start: start,
-                fd: null,
-            }),
-            output: null,
-            terminal: false,
+        go = fs.createReadStream(options.file,{
+            flags: options.flag,
+            mode: options.mode,
+            encoding: options.encoding,
+            autoClose: options.autoClose,
+            start: start,
+            fd: null,
         });
     }
+    return go;
+}
+/**
+ * build readline interface
+ * 
+ * @function readlin
+ * @param {Object} options - various options. Check README.md
+ * @param {Integer} start - starting bytes
+ * @param {Integer} [end] - ending bytes
+ * @return {Objetc}
+ */
+function readlin(options,start,end) {
+
+    var go;
+    go = readline.createInterface({
+        input: interfac(options,start,end),
+        output: null,
+        terminal: false,
+    });
     return go;
 }
 /**
@@ -90,13 +103,13 @@ module.exports = function startline(options) {
     }
 
     // clean
+    my.encoding = options.encoding;
     my.flag = String(options.flag || 'r');
-    my.encoding = String(options.encoding || 'utf-8');
     my.mode = parseInt(options.mode) || 444;
-    my.start = parseInt(options.start);
-    my.end = parseInt(options.end);
+    my.start = options.start;
+    my.end = options.end;
     my.autoClose = options.autoClose == false ? false : true;
-    my.arc4 = options.arc4 == true ? true : false;
+    my.rc4 = options.rc4;
 
     return new STARTLINE(my);
 };
@@ -113,22 +126,48 @@ module.exports = function startline(options) {
  */
 function STARTLINE(options) {
 
-    EventEmitter.call(this)
+    event.call(this)
 
     this.options = options;
     this.head = 0;
     this.tail = 0;
-    this._stream = interfac(this.options,options.start,options.end);
     var self = this; // closure
+    this._stream;
 
-    this._stream.on('line',function(callback) {
+    if (options.rc4) {
+        var cipher = rc4(String(options.rc4));
+        var temp = '';
+        this._stream = interfac(this.options,options.start,options.end)
+        this._stream.on('data',function(callback) {
 
-        self.tail = self.head + 2; // .\n
-        self.head += callback.length;
+            callback = cipher.codeBuffer(callback).toString();
+            for (var i = 0, ii = callback.length; i < ii; i++) {
+                if (callback[i] == eol) {
+                    self.tail = self.head + 1; // \n
+                    self.head += callback.length;
+                    self.emit('line',temp);
+                    temp = '';
+                } else {
+                    temp += callback[i];
+                }
+            }
+            if (temp.length > 0) {
+                self.tail = self.head + 1; // \n
+                self.head += callback.length;
+                self.emit('line',temp);
+            }
+            return;
+        });
+    } else {
+        this._stream = readlin(this.options,options.start,options.end)
+        this._stream.on('line',function(callback) {
 
-        self.emit('line',callback);
-        return;
-    });
+            self.tail = self.head + 1; // \n
+            self.head += callback.length;
+            self.emit('line',callback);
+            return;
+        });
+    }
     this._stream.on('pause',function() {
 
         self.emit('pause');
@@ -139,18 +178,28 @@ function STARTLINE(options) {
         self.emit('resume');
         return;
     });
+    this._stream.on('open',function(fd) {
+
+        self.emit('open',fd);
+        return;
+    });
     this._stream.on('close',function() {
 
         self.emit('close');
         return;
     });
-    this._stream.on('error',function() {
+    this._stream.on('end',function() {
 
-        self.emit('error');
+        self.emit('end');
+        return;
+    });
+    this._stream.on('error',function(err) {
+
+        self.emit('error',err);
         return;
     });
 };
-inherits(STARTLINE,EventEmitter);
+inherits(STARTLINE,event);
 /**
  * _stream pause
  * 
