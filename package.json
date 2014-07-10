@@ -1,6 +1,6 @@
 {
   "name": "startline",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "stream readline with starting point for nodejs",
   "main": "index.js",
   "repository": {
@@ -16,7 +16,8 @@
     "url": "http://hex7c0.tk/"
   },
   "dependencies": {
-    "arc4": "1.2.X"
+    "arc4": "2.0.X",
+    "autokey": "1.1.X"
   },
   "devDependencies": {
   },
@@ -27,7 +28,8 @@
     "readline",
     "readfile",
     "line",
-    "rc4"
+    "rc4",
+    "autokey"
   ],
   "license": "GPLv3",
   "homepage": "https://github.com/hex7c0/startline/"

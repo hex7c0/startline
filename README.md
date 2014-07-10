@@ -31,7 +31,7 @@ readline.on('line',function(line) {
 
 ### methods
 
-get head of string (bytes readed)
+get head of string (bytes red)
 ```js
 readline.head
 ```
@@ -49,7 +49,8 @@ readline.read(start,end)
 ### startline(options)
 
  - `file` - **String** Path of file *(required)*
- - `arc4` - **String** Password for reading a encrypted file *(default "disabled")*
+ - `arc4` - **String** Password for reading a encrypted file with rc4 *(default "disabled")*
+ - `autokey` - **String** Password for reading a encrypted file with autokey *(default "disabled")*
  - `encoding` - **utf8 | ascii | base64 | null** File encoding *(default "null")*
  - `mode` - **String** File permission *(default "444")*
  - `start` - **Integer** Starting bytes *(default "entire file")*
