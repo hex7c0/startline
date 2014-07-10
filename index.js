@@ -4,7 +4,7 @@
  * @module startline
  * @package startline
  * @subpackage main
- * @version 1.1.0
+ * @version 1.2.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -17,8 +17,6 @@ var fs = require('fs');
 var readline = require('readline');
 var event = require('events').EventEmitter;
 var inherits = require('util').inherits;
-var eol = require('os').EOL;
-var rc4 = require('arc4');
 
 /*
  * functions
@@ -106,10 +104,11 @@ module.exports = function startline(options) {
     my.encoding = options.encoding;
     my.flag = String(options.flag || 'r');
     my.mode = parseInt(options.mode) || 444;
+    my.autoClose = options.autoClose == false ? false : true;
     my.start = options.start;
     my.end = options.end;
-    my.autoClose = options.autoClose == false ? false : true;
     my.rc4 = options.rc4;
+    my.autokey = options.autokey;
 
     return new STARTLINE(my);
 };
@@ -134,30 +133,58 @@ function STARTLINE(options) {
     var self = this; // closure
     this._stream;
 
-    if (options.rc4) {
-        var cipher = rc4(String(options.rc4));
+    if (options.rc4 || options.autokey) {
+        var eol = require('os').EOL;
         var temp = '';
+        var cipher;
+        var fx;
         this._stream = interfac(this.options,options.start,options.end)
-        this._stream.on('data',function(callback) {
+        if (options.rc4) {
+            cipher = require('arc4')(String(options.rc4));
+            this._stream.on('data',function(callback) {
 
-            callback = cipher.codeBuffer(callback).toString();
-            for (var i = 0, ii = callback.length; i < ii; i++) {
-                if (callback[i] == eol) {
+                callback = cipher.codeBuffer(callback).toString();
+                for (var i = 0, ii = callback.length; i < ii; i++) {
+                    if (callback[i] == eol) {
+                        self.tail = self.head + 1; // \n
+                        self.head += callback.length;
+                        self.emit('line',temp);
+                        temp = '';
+                    } else {
+                        temp += callback[i];
+                    }
+                }
+                if (temp.length > 0) {
                     self.tail = self.head + 1; // \n
                     self.head += callback.length;
                     self.emit('line',temp);
-                    temp = '';
-                } else {
-                    temp += callback[i];
                 }
-            }
-            if (temp.length > 0) {
-                self.tail = self.head + 1; // \n
-                self.head += callback.length;
-                self.emit('line',temp);
-            }
-            return;
-        });
+                return;
+            });
+        } else {
+            console.log(options.autokey)
+            cipher = require('autokey')(String(options.autokey));
+            this._stream.on('data',function(callback) {
+
+                callback = cipher.decodeBuffer(callback).toString();
+                for (var i = 0, ii = callback.length; i < ii; i++) {
+                    if (callback[i] == eol) {
+                        self.tail = self.head + 1; // \n
+                        self.head += callback.length;
+                        self.emit('line',temp);
+                        temp = '';
+                    } else {
+                        temp += callback[i];
+                    }
+                }
+                if (temp.length > 0) {
+                    self.tail = self.head + 1; // \n
+                    self.head += callback.length;
+                    self.emit('line',temp);
+                }
+                return;
+            });
+        }
     } else {
         this._stream = readlin(this.options,options.start,options.end)
         this._stream.on('line',function(callback) {
