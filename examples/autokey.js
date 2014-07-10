@@ -1,6 +1,6 @@
 "use strict";
 /**
- * @file rc4 example
+ * @file autokey example
  * @module startline
  * @package startline
  * @subpackage examples
@@ -22,8 +22,8 @@ try {
 
 // print hello
 var readline = startline({
-    file: 'crypted_rc',
-    rc4: 'hex7c0',
+    file: 'crypted_ak',
+    autokey: 'hex7c0',
     encoding: null,
 });
 
