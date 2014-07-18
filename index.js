@@ -4,7 +4,7 @@
  * @module startline
  * @package startline
  * @subpackage main
- * @version 1.2.0
+ * @version 1.2.1
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -32,8 +32,6 @@ var inherits = require('util').inherits;
  */
 function interfac(options,start,end) {
 
-    var start = parseInt(start) || 0;
-    var end = parseInt(end);
     var go;
     if (end >= 0) {
         go = fs.createReadStream(options.file,{
@@ -57,6 +55,7 @@ function interfac(options,start,end) {
     }
     return go;
 }
+
 /**
  * build readline interface
  * 
@@ -76,6 +75,7 @@ function readlin(options,start,end) {
     });
     return go;
 }
+
 /**
  * export class
  * 
@@ -88,25 +88,26 @@ module.exports = function startline(options) {
 
     var options = options || Object.create(null);
     var my = Object.create(null);
-    var file;
 
     // file
-    if (file = String(options.file)) {
-        if (!fs.existsSync(file)) {
-            throw new Error(file + ' not exists');
+    if (Boolean(options.file)) {
+        my.file = require('path').resolve(String(options.file));
+        if (!fs.existsSync(my.file)) {
+            var err = my.file + ' not exists';
+            throw new Error(err);
         }
-        my.file = require('path').resolve(file);
     } else {
-        throw new Error('"file" is required');
+        var err = '"file" is required';
+        throw new Error(err);
     }
 
     // clean
     my.encoding = options.encoding;
     my.flag = String(options.flag || 'r');
-    my.mode = parseInt(options.mode) || 444;
+    my.mode = Number(options.mode) || 444;
     my.autoClose = options.autoClose == false ? false : true;
-    my.start = options.start;
-    my.end = options.end;
+    my.start = Number(options.start) || 0;
+    my.end = Number(options.end);
     my.rc4 = options.rc4;
     my.autokey = options.autokey;
 
@@ -137,7 +138,6 @@ function STARTLINE(options) {
         var eol = require('os').EOL;
         var temp = '';
         var cipher;
-        var fx;
         this._stream = interfac(this.options,options.start,options.end)
         if (options.rc4) {
             cipher = require('arc4')(String(options.rc4));
@@ -146,7 +146,7 @@ function STARTLINE(options) {
                 callback = cipher.codeBuffer(callback).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
                     if (callback[i] == eol) {
-                        self.tail = self.head + 1; // \n
+                        self.tail = self.head + 2; // \n
                         self.head += callback.length;
                         self.emit('line',temp);
                         temp = '';
@@ -155,21 +155,20 @@ function STARTLINE(options) {
                     }
                 }
                 if (temp.length > 0) {
-                    self.tail = self.head + 1; // \n
+                    self.tail = self.head + 2; // \n
                     self.head += callback.length;
                     self.emit('line',temp);
                 }
                 return;
             });
         } else {
-            console.log(options.autokey)
             cipher = require('autokey')(String(options.autokey));
             this._stream.on('data',function(callback) {
 
                 callback = cipher.decodeBuffer(callback).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
                     if (callback[i] == eol) {
-                        self.tail = self.head + 1; // \n
+                        self.tail = self.head + 2; // \n
                         self.head += callback.length;
                         self.emit('line',temp);
                         temp = '';
@@ -178,18 +177,42 @@ function STARTLINE(options) {
                     }
                 }
                 if (temp.length > 0) {
-                    self.tail = self.head + 1; // \n
+                    self.tail = self.head + 2; // \n
                     self.head += callback.length;
                     self.emit('line',temp);
                 }
                 return;
             });
         }
+    } else if (options.end >= 0) {
+        var eol = require('os').EOL;
+        var temp = '';
+        this._stream = interfac(this.options,options.start,options.end)
+        this._stream.on('data',function(callback) {
+
+            callback = callback.toString();
+            for (var i = 0, ii = callback.length; i < ii; i++) {
+                if (callback[i] == eol) {
+                    self.tail = self.head + 2; // \n
+                    self.head += callback.length;
+                    self.emit('line',temp);
+                    temp = '';
+                } else {
+                    temp += callback[i];
+                }
+            }
+            if (temp.length > 0) {
+                self.tail = self.head + 2; // \n
+                self.head += callback.length;
+                self.emit('line',temp);
+            }
+            return;
+        });
     } else {
         this._stream = readlin(this.options,options.start,options.end)
         this._stream.on('line',function(callback) {
 
-            self.tail = self.head + 1; // \n
+            self.tail = self.head + 2; // \n
             self.head += callback.length;
             self.emit('line',callback);
             return;
@@ -260,7 +283,7 @@ STARTLINE.prototype.resume = function() {
 STARTLINE.prototype.read = function(start,end) {
 
     var my = this.options;
-    my.start = parseInt(start);
-    my.end = parseInt(end);
+    my.start = Number(start) || 0;
+    my.end = Number(end);
     return new STARTLINE(my);
 };
