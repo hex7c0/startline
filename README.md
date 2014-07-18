@@ -1,6 +1,6 @@
 #startline [![Build Status](https://travis-ci.org/hex7c0/startline.svg?branch=master)](https://travis-ci.org/hex7c0/startline) [![NPM version](https://badge.fury.io/js/startline.svg)](http://badge.fury.io/js/startline)
 
-stream readline with starting point for [nodejs](http://nodejs.org/). You can even encode a file with rc4 cipher
+stream readline with starting point for [nodejs](http://nodejs.org/). You can even encode a file with rc4 cipher, or autokey.
 
 ## Installation
 
