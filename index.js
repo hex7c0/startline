@@ -4,7 +4,7 @@
  * @module startline
  * @package startline
  * @subpackage main
- * @version 1.2.1
+ * @version 1.2.2
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -126,7 +126,7 @@ module.exports = function startline(options) {
  */
 function STARTLINE(options) {
 
-    event.call(this)
+    event.call(this);
 
     this.options = options;
     this.head = 0;
@@ -138,12 +138,12 @@ function STARTLINE(options) {
         var eol = require('os').EOL;
         var temp = '';
         var cipher;
-        this._stream = interfac(this.options,options.start,options.end)
+        this._stream = interfac(this.options,options.start,options.end);
         if (options.rc4) {
             cipher = require('arc4')(String(options.rc4));
             this._stream.on('data',function(callback) {
 
-                callback = cipher.codeBuffer(callback).toString();
+                var callback = cipher.codeBuffer(callback).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
                     if (callback[i] == eol) {
                         self.tail = self.head + 2; // \n
@@ -165,7 +165,7 @@ function STARTLINE(options) {
             cipher = require('autokey')(String(options.autokey));
             this._stream.on('data',function(callback) {
 
-                callback = cipher.decodeBuffer(callback).toString();
+                var callback = cipher.decodeBuffer(callback).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
                     if (callback[i] == eol) {
                         self.tail = self.head + 2; // \n
@@ -187,10 +187,10 @@ function STARTLINE(options) {
     } else if (options.end >= 0) {
         var eol = require('os').EOL;
         var temp = '';
-        this._stream = interfac(this.options,options.start,options.end)
+        this._stream = interfac(this.options,options.start,options.end);
         this._stream.on('data',function(callback) {
 
-            callback = callback.toString();
+            var callback = callback.toString();
             for (var i = 0, ii = callback.length; i < ii; i++) {
                 if (callback[i] == eol) {
                     self.tail = self.head + 2; // \n
@@ -209,7 +209,7 @@ function STARTLINE(options) {
             return;
         });
     } else {
-        this._stream = readlin(this.options,options.start,options.end)
+        this._stream = readlin(this.options,options.start,options.end);
         this._stream.on('line',function(callback) {
 
             self.tail = self.head + 2; // \n
@@ -248,7 +248,7 @@ function STARTLINE(options) {
         self.emit('error',err);
         return;
     });
-};
+}
 inherits(STARTLINE,event);
 /**
  * _stream pause

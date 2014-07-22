@@ -1,6 +1,6 @@
 {
   "name": "startline",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "stream readline with starting point for nodejs",
   "main": "index.js",
   "repository": {
@@ -16,8 +16,8 @@
     "url": "http://hex7c0.tk/"
   },
   "dependencies": {
-    "arc4": "2.0.X",
-    "autokey": "1.1.X"
+    "arc4": "2.0.0",
+    "autokey": "1.1.0"
   },
   "devDependencies": {
   },

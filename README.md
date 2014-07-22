@@ -53,12 +53,11 @@ readline.read(start,end)
  - `autokey` - **String** Password for reading a encrypted file with autokey *(default "disabled")*
  - `encoding` - **utf8 | ascii | base64 | null** File encoding *(default "null")*
  - `mode` - **String** File permission *(default "444")*
- - `start` - **Integer** Starting bytes *(default "entire file")*
+ - `start` - **Integer** Starting bytes *(default "starting file")*
  - `end` - **Integer** Ending bytes *(default "entire file")*
  - `autoClose` - **Boolean** If file descriptor will be closed automatically *(default "true")*
 
 releated to http://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
-
 
 #### Examples
 
