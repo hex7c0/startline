@@ -4,7 +4,7 @@
  * @module startline
  * @package startline
  * @subpackage main
- * @version 1.2.2
+ * @version 1.3.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -17,6 +17,7 @@ var fs = require('fs');
 var readline = require('readline');
 var event = require('events').EventEmitter;
 var inherits = require('util').inherits;
+var eol = require('os').EOL;
 
 /*
  * functions
@@ -122,21 +123,19 @@ module.exports = function startline(options) {
  * 
  * @class STARTLINE
  * @param {Object} options - various options. Check README.md
- * @return
  */
 function STARTLINE(options) {
 
     event.call(this);
-
+    var self = this; // closure
+    var temp = '';
     this.options = options;
     this.head = 0;
     this.tail = 0;
-    var self = this; // closure
+    this.line = 0;
     this._stream;
 
     if (options.rc4 || options.autokey) {
-        var eol = require('os').EOL;
-        var temp = '';
         var cipher;
         this._stream = interfac(this.options,options.start,options.end);
         if (options.rc4) {
@@ -146,18 +145,20 @@ function STARTLINE(options) {
                 var callback = cipher.codeBuffer(callback).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
                     if (callback[i] == eol) {
-                        self.tail = self.head + 2; // \n
-                        self.head += callback.length;
+                        self.tail = self.head + self.line;
+                        self.head = self.tail + temp.length;
                         self.emit('line',temp);
+                        self.line = 1;
                         temp = '';
                     } else {
                         temp += callback[i];
                     }
                 }
                 if (temp.length > 0) {
-                    self.tail = self.head + 2; // \n
-                    self.head += callback.length;
+                    self.tail = self.head + self.line;
+                    self.head = self.tail + temp.length;
                     self.emit('line',temp);
+                    self.line = 1;
                 }
                 return;
             });
@@ -168,43 +169,45 @@ function STARTLINE(options) {
                 var callback = cipher.decodeBuffer(callback).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
                     if (callback[i] == eol) {
-                        self.tail = self.head + 2; // \n
-                        self.head += callback.length;
+                        self.tail = self.head + self.line;
+                        self.head = self.tail + temp.length;
                         self.emit('line',temp);
+                        self.line = 1;
                         temp = '';
                     } else {
                         temp += callback[i];
                     }
                 }
                 if (temp.length > 0) {
-                    self.tail = self.head + 2; // \n
-                    self.head += callback.length;
+                    self.tail = self.head + self.line;
+                    self.head = self.tail + temp.length;
                     self.emit('line',temp);
+                    self.line = 1;
                 }
                 return;
             });
         }
     } else if (options.end >= 0) {
-        var eol = require('os').EOL;
-        var temp = '';
         this._stream = interfac(this.options,options.start,options.end);
         this._stream.on('data',function(callback) {
 
             var callback = callback.toString();
             for (var i = 0, ii = callback.length; i < ii; i++) {
                 if (callback[i] == eol) {
-                    self.tail = self.head + 2; // \n
-                    self.head += callback.length;
+                    self.tail = self.head + self.line;
+                    self.head = self.tail + temp.length;
                     self.emit('line',temp);
+                    self.line = 1;
                     temp = '';
                 } else {
                     temp += callback[i];
                 }
             }
             if (temp.length > 0) {
-                self.tail = self.head + 2; // \n
-                self.head += callback.length;
+                self.tail = self.head + self.line;
+                self.head = self.tail + temp.length;
                 self.emit('line',temp);
+                self.line = 1;
             }
             return;
         });
@@ -212,9 +215,10 @@ function STARTLINE(options) {
         this._stream = readlin(this.options,options.start,options.end);
         this._stream.on('line',function(callback) {
 
-            self.tail = self.head + 2; // \n
-            self.head += callback.length;
+            self.tail = self.head + self.line;
+            self.head = self.tail + callback.length;
             self.emit('line',callback);
+            self.line = 1;
             return;
         });
     }
@@ -254,7 +258,6 @@ inherits(STARTLINE,event);
  * _stream pause
  * 
  * @function pause
- * @return
  */
 STARTLINE.prototype.pause = function() {
 
@@ -265,7 +268,6 @@ STARTLINE.prototype.pause = function() {
  * _stream resume
  * 
  * @function resume
- * @return
  */
 STARTLINE.prototype.resume = function() {
 
