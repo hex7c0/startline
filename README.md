@@ -1,6 +1,10 @@
-#startline [![Build Status](https://travis-ci.org/hex7c0/startline.svg?branch=master)](https://travis-ci.org/hex7c0/startline) [![NPM version](https://badge.fury.io/js/startline.svg)](http://badge.fury.io/js/startline)
+# [startline](https://github.com/hex7c0/startline)
+[![NPM version](https://badge.fury.io/js/startline.svg)](http://badge.fury.io/js/startline)
+[![Build Status](https://travis-ci.org/hex7c0/startline.svg?branch=master)](https://travis-ci.org/hex7c0/startline)
+[![devDependency Status](https://david-dm.org/hex7c0/startline/dev-status.svg)](https://david-dm.org/hex7c0/startline#info=devDependencies)
 
-stream readline with starting point for [nodejs](http://nodejs.org/). You can even encode a file with rc4 cipher, or autokey.
+Stream readline with starting and ending point for [nodejs](http://nodejs.org/).
+You can even encode a file with rc4 cipher, or autokey.
 
 ## Installation
 
@@ -47,6 +51,8 @@ readline.read(start,end)
 ```
 
 ### startline(options)
+
+#### options
 
  - `file` - **String** Path of file *(required)*
  - `arc4` - **String** Password for reading a encrypted file with rc4 *(default "disabled")*
