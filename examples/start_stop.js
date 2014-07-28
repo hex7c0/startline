@@ -14,7 +14,7 @@
  */
 // import
 try {
-    var startline = require('../index.js'); // use require('startline') instead
+    var startline = require('../index.min.js'); // use require('startline') instead
 } catch (MODULE_NOT_FOUND) {
     console.error(MODULE_NOT_FOUND);
     process.exit(1);
@@ -26,13 +26,12 @@ var readline = startline({
 });
 
 var c = 0;
-var self = readline
 readline.on('line',function(line) {
 
     c++;
     if (c == 3) {
         console.log(line);
-        neww(readline.read(readline.tail,readline.head));
+        neww(readline.read(readline.tail,readline.head + 1));
     }
     return;
 });

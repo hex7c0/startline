@@ -14,7 +14,7 @@
  */
 // import
 try {
-    var startline = require('../index.js'); // use require('startline') instead
+    var startline = require('../index.min.js'); // use require('startline') instead
 } catch (MODULE_NOT_FOUND) {
     console.error(MODULE_NOT_FOUND);
     process.exit(1);
