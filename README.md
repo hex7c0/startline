@@ -17,6 +17,10 @@ or
 ```
 git clone git://github.com/hex7c0/startline.git
 ```
+or
+```
+http://supergiovane.tk/#/startline
+```
 
 ## API
 
