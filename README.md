@@ -1,4 +1,4 @@
-# [startline](https://github.com/hex7c0/startline)
+# [startline](http://supergiovane.tk/#/startline)
 [![NPM version](https://badge.fury.io/js/startline.svg)](http://badge.fury.io/js/startline)
 [![Build Status](https://travis-ci.org/hex7c0/startline.svg?branch=master)](https://travis-ci.org/hex7c0/startline)
 [![devDependency Status](https://david-dm.org/hex7c0/startline/dev-status.svg)](https://david-dm.org/hex7c0/startline#info=devDependencies)
@@ -59,13 +59,14 @@ readline.read(start,end)
 #### options
 
  - `file` - **String** Path of file *(required)*
- - `arc4` - **String** Password for reading a encrypted file with rc4 *(default "disabled")*
- - `autokey` - **String** Password for reading a encrypted file with autokey *(default "disabled")*
+ - `arc4` - **String** Password for reading a encrypted file with [rc4](https://github.com/hex7c0/arc4) *(default "disabled")*
+ - `autokey` - **String** Password for reading a encrypted file with [autokey](https://github.com/hex7c0/autokey) *(default "disabled")*
  - `encoding` - **utf8 | ascii | base64 | null** File encoding *(default "null")*
  - `mode` - **String** File permission *(default "444")*
  - `start` - **Integer** Starting bytes *(default "starting file")*
  - `end` - **Integer** Ending bytes *(default "entire file")*
  - `autoClose` - **Boolean** If file descriptor will be closed automatically *(default "true")*
+ - `lodash` - **Boolean** Use lodash library with encrypted file *(default "disabled")*
 
 releated to http://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
 
