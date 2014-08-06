@@ -1,5 +1,5 @@
 {
-  "version": "1.3.2",
+  "version": "1.3.3",
   "name": "startline",
   "description": "stream readline with starting point for nodejs",
   "keywords": [
@@ -30,8 +30,8 @@
   },
   "main": "index.min.js",
   "dependencies": {
-    "arc4": "2.1.4",
-    "autokey": "1.2.1"
+    "arc4": "2.2.1",
+    "autokey": "1.3.0"
   },
   "devDependencies": {
     "mocha": "~1.21.3",
