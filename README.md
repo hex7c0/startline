@@ -1,25 +1,22 @@
 # [startline](http://supergiovane.tk/#/startline)
+
 [![NPM version](https://badge.fury.io/js/startline.svg)](http://badge.fury.io/js/startline)
 [![Build Status](https://travis-ci.org/hex7c0/startline.svg?branch=master)](https://travis-ci.org/hex7c0/startline)
 [![devDependency Status](https://david-dm.org/hex7c0/startline/dev-status.svg)](https://david-dm.org/hex7c0/startline#info=devDependencies)
 
 Stream readline with starting and ending point for [nodejs](http://nodejs.org/).
-You can even encode a file with rc4 cipher, or autokey.
+You can even encode a file with [rc4](https://github.com/hex7c0/arc4) cipher, or [autokey](https://github.com/hex7c0/autokey).
 
 ## Installation
 
 Install through NPM
 
-```
+```bash
 npm install startline
 ```
 or
-```
+```bash
 git clone git://github.com/hex7c0/startline.git
-```
-or
-```
-http://supergiovane.tk/#/startline
 ```
 
 ## API
@@ -37,7 +34,7 @@ readline.on('line',function(line) {
 });
 ```
 
-### methods
+### Methods
 
 get head of string (bytes red)
 ```js
@@ -68,14 +65,10 @@ readline.read(start,end)
  - `autoClose` - **Boolean** If file descriptor will be closed automatically *(default "true")*
  - `lodash` - **Boolean** Use lodash library with encrypted file *(default "disabled")*
 
-releated to http://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
+related to http://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
 
-#### Examples
+## Examples
 
 Take a look at my [examples](https://github.com/hex7c0/startline/tree/master/examples)
 
-## License
-Copyright (c) 2014 hex7c0
-
-Licensed under the GPLv3 license
-
+### [License GPLv3](http://opensource.org/licenses/GPL-3.0)
