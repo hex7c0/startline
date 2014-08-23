@@ -31,11 +31,11 @@ var eol = require('os').EOL;
  * @param {Integer} [end] - ending bytes
  * @return {Objetc}
  */
-function interfac(options,start,end) {
+function interfac(options, start, end) {
 
     var go;
     if (end >= 0) {
-        go = fs.createReadStream(options.file,{
+        go = fs.createReadStream(options.file, {
             flags: options.flag,
             mode: options.mode,
             encoding: options.encoding,
@@ -45,7 +45,7 @@ function interfac(options,start,end) {
             fd: null,
         });
     } else {
-        go = fs.createReadStream(options.file,{
+        go = fs.createReadStream(options.file, {
             flags: options.flag,
             mode: options.mode,
             encoding: options.encoding,
@@ -66,11 +66,11 @@ function interfac(options,start,end) {
  * @param {Integer} [end] - ending bytes
  * @return {Objetc}
  */
-function readlin(options,start,end) {
+function readlin(options, start, end) {
 
     var go;
     go = readline.createInterface({
-        input: interfac(options,start,end),
+        input: interfac(options, start, end),
         output: null,
         terminal: false,
     });
@@ -140,17 +140,17 @@ function STARTLINE(options) {
 
     if (options.rc4 || options.autokey) {
         var cipher;
-        this._stream = interfac(this.options,options.start,options.end);
+        this._stream = interfac(this.options, options.start, options.end);
         if (options.rc4) {
-            cipher = require('arc4')(String(options.rc4),options.lodash);
-            this._stream.on('data',function(callback) {
+            cipher = require('arc4')(String(options.rc4), options.lodash);
+            this._stream.on('data', function(callback) {
 
                 var callback = cipher.codeBuffer(callback).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
-                    if (callback[i] == eol) {
+                    if (callback[i] === eol) {
                         self.tail = self.head + self.line;
                         self.head = self.tail + temp.length;
-                        self.emit('line',temp);
+                        self.emit('line', temp);
                         self.line = 1;
                         temp = '';
                     } else {
@@ -160,21 +160,22 @@ function STARTLINE(options) {
                 if (temp.length > 0) {
                     self.tail = self.head + self.line;
                     self.head = self.tail + temp.length;
-                    self.emit('line',temp);
+                    self.emit('line', temp);
                     self.line = 1;
                 }
                 return;
             });
         } else {
-            cipher = require('autokey')(String(options.autokey),options.lodash);
-            this._stream.on('data',function(callback) {
+            cipher = require('autokey')
+                    (String(options.autokey), options.lodash);
+            this._stream.on('data', function(callback) {
 
                 var callback = cipher.decodeBuffer(callback).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
-                    if (callback[i] == eol) {
+                    if (callback[i] === eol) {
                         self.tail = self.head + self.line;
                         self.head = self.tail + temp.length;
-                        self.emit('line',temp);
+                        self.emit('line', temp);
                         self.line = 1;
                         temp = '';
                     } else {
@@ -184,22 +185,22 @@ function STARTLINE(options) {
                 if (temp.length > 0) {
                     self.tail = self.head + self.line;
                     self.head = self.tail + temp.length;
-                    self.emit('line',temp);
+                    self.emit('line', temp);
                     self.line = 1;
                 }
                 return;
             });
         }
     } else if (options.end >= 0) {
-        this._stream = interfac(this.options,options.start,options.end);
-        this._stream.on('data',function(callback) {
+        this._stream = interfac(this.options, options.start, options.end);
+        this._stream.on('data', function(callback) {
 
             var callback = callback.toString();
             for (var i = 0, ii = callback.length; i < ii; i++) {
-                if (callback[i] == eol) {
+                if (callback[i] === eol) {
                     self.tail = self.head + self.line;
                     self.head = self.tail + temp.length;
-                    self.emit('line',temp);
+                    self.emit('line', temp);
                     self.line = 1;
                     temp = '';
                 } else {
@@ -209,54 +210,54 @@ function STARTLINE(options) {
             if (temp.length > 0) {
                 self.tail = self.head + self.line;
                 self.head = self.tail + temp.length;
-                self.emit('line',temp);
+                self.emit('line', temp);
                 self.line = 1;
             }
             return;
         });
     } else {
-        this._stream = readlin(this.options,options.start,options.end);
-        this._stream.on('line',function(callback) {
+        this._stream = readlin(this.options, options.start, options.end);
+        this._stream.on('line', function(callback) {
 
             self.tail = self.head + self.line;
             self.head = self.tail + callback.length;
-            self.emit('line',callback);
+            self.emit('line', callback);
             self.line = 1;
             return;
         });
     }
-    this._stream.on('pause',function() {
+    this._stream.on('pause', function() {
 
         self.emit('pause');
         return;
     });
-    this._stream.on('resume',function() {
+    this._stream.on('resume', function() {
 
         self.emit('resume');
         return;
     });
-    this._stream.on('open',function(fd) {
+    this._stream.on('open', function(fd) {
 
-        self.emit('open',fd);
+        self.emit('open', fd);
         return;
     });
-    this._stream.on('close',function() {
+    this._stream.on('close', function() {
 
         self.emit('close');
         return;
     });
-    this._stream.on('end',function() {
+    this._stream.on('end', function() {
 
         self.emit('end');
         return;
     });
-    this._stream.on('error',function(err) {
+    this._stream.on('error', function(err) {
 
-        self.emit('error',err);
+        self.emit('error', err);
         return;
     });
 }
-inherits(STARTLINE,event);
+inherits(STARTLINE, event);
 /**
  * _stream pause
  * 
@@ -285,7 +286,7 @@ STARTLINE.prototype.resume = function() {
  * @param {Integer} [end] - ending bytes
  * @return {STARTLINE}
  */
-STARTLINE.prototype.read = function(start,end) {
+STARTLINE.prototype.read = function(start, end) {
 
     var my = this.options;
     my.start = Number(start) || 0;
