@@ -2,7 +2,7 @@
 
 [![NPM version](https://badge.fury.io/js/startline.svg)](http://badge.fury.io/js/startline)
 [![Build Status](https://travis-ci.org/hex7c0/startline.svg?branch=master)](https://travis-ci.org/hex7c0/startline)
-[![devDependency Status](https://david-dm.org/hex7c0/startline/dev-status.svg)](https://david-dm.org/hex7c0/startline#info=devDependencies)
+[![Dependency Status](https://david-dm.org/hex7c0/startline/status.svg)](https://david-dm.org/hex7c0/startline)
 
 Stream readline with starting and ending point for [nodejs](http://nodejs.org/).
 You can even encode a file with [rc4](https://github.com/hex7c0/arc4) cipher, or [autokey](https://github.com/hex7c0/autokey).
