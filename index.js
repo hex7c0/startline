@@ -4,7 +4,7 @@
  * @module startline
  * @package startline
  * @subpackage main
- * @version 1.3.2
+ * @version 1.3.7
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -145,7 +145,7 @@ function STARTLINE(options) {
             cipher = require('arc4')(String(options.rc4), options.lodash);
             this._stream.on('data', function(callback) {
 
-                var callback = cipher.codeBuffer(callback).toString();
+                var callback = cipher.decodeBuffer(callback).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
                     if (callback[i] === eol) {
                         self.tail = self.head + self.line;
