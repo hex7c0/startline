@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @file autokey example
  * @module startline

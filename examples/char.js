@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @file read first char example
  * @module startline
