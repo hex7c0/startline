@@ -4,7 +4,7 @@
  * @module startline
  * @package startline
  * @subpackage main
- * @version 1.3.7
+ * @version 1.3.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -82,23 +82,23 @@ function readlin(options, start, end) {
  * 
  * @exports startline
  * @function startline
- * @param {Object} options - various options. Check README.md
+ * @param {Object} opt - various options. Check README.md
  * @return {STARTLINE}
  */
-module.exports = function startline(options) {
+function startline(opt) {
 
-    var options = options || Object.create(null);
+    var options = opt || Object.create(null);
 
     // file
+    var file;
     if (Boolean(options.file)) {
-        var file = require('path').resolve(String(options.file));
+        file = require('path').resolve(String(options.file));
         if (!fs.existsSync(file)) {
             var err = file + ' not exists';
             throw new Error(err);
         }
     } else {
-        var err = '"file" is required';
-        throw new Error(err);
+        throw new Error('"file" is required');
     }
 
     // clean
@@ -107,7 +107,7 @@ module.exports = function startline(options) {
         encoding: options.encoding,
         flag: String(options.flag || 'r'),
         mode: Number(options.mode) || 444,
-        autoClose: options.autoClose == false ? false : true,
+        autoClose: options.autoClose === false ? false : true,
         start: Number(options.start) || 0,
         end: Number(options.end),
         rc4: options.rc4,
@@ -116,7 +116,8 @@ module.exports = function startline(options) {
     };
 
     return new STARTLINE(my);
-};
+}
+module.exports = startline;
 
 /*
  * class
@@ -136,16 +137,16 @@ function STARTLINE(options) {
     this.head = 0;
     this.tail = 0;
     this.line = 0;
-    this._stream;
+    this._stream = null;
 
     if (options.rc4 || options.autokey) {
         var cipher;
         this._stream = interfac(this.options, options.start, options.end);
         if (options.rc4) {
             cipher = require('arc4')(String(options.rc4), options.lodash);
-            this._stream.on('data', function(callback) {
+            this._stream.on('data', function(callbacks) {
 
-                var callback = cipher.decodeBuffer(callback).toString();
+                var callback = cipher.decodeBuffer(callbacks).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
                     if (callback[i] === eol) {
                         self.tail = self.head + self.line;
@@ -168,9 +169,9 @@ function STARTLINE(options) {
         } else {
             cipher = require('autokey')
                     (String(options.autokey), options.lodash);
-            this._stream.on('data', function(callback) {
+            this._stream.on('data', function(callbacks) {
 
-                var callback = cipher.decodeBuffer(callback).toString();
+                var callback = cipher.decodeBuffer(callbacks).toString();
                 for (var i = 0, ii = callback.length; i < ii; i++) {
                     if (callback[i] === eol) {
                         self.tail = self.head + self.line;
@@ -193,9 +194,9 @@ function STARTLINE(options) {
         }
     } else if (options.end >= 0) {
         this._stream = interfac(this.options, options.start, options.end);
-        this._stream.on('data', function(callback) {
+        this._stream.on('data', function(callbacks) {
 
-            var callback = callback.toString();
+            var callback = callbacks.toString();
             for (var i = 0, ii = callback.length; i < ii; i++) {
                 if (callback[i] === eol) {
                     self.tail = self.head + self.line;
