@@ -2,9 +2,8 @@
 /**
  * @file startline main
  * @module startline
- * @package startline
  * @subpackage main
- * @version 1.3.0
+ * @version 1.4.0
  * @author hex7c0 <hex7c0@gmail.com>
  * @copyright hex7c0 2014
  * @license GPLv3
@@ -83,7 +82,7 @@ function readlin(options, start, end) {
  * @exports startline
  * @function startline
  * @param {Object} opt - various options. Check README.md
- * @return {STARTLINE}
+ * @return {Startline}
  */
 function startline(opt) {
 
@@ -115,7 +114,7 @@ function startline(opt) {
     lodash: Boolean(options.autokey),
   };
 
-  return new STARTLINE(my);
+  return new Startline(my);
 }
 module.exports = startline;
 
@@ -123,12 +122,12 @@ module.exports = startline;
  * class
  */
 /**
- * STARTLINE class
+ * Startline class
  * 
- * @class STARTLINE
+ * @class Startline
  * @param {Object} options - various options. Check README.md
  */
-function STARTLINE(options) {
+function Startline(options) {
 
   event.call(this);
   var self = this; // closure
@@ -226,70 +225,61 @@ function STARTLINE(options) {
       return;
     });
   }
+  // standard events
   this._stream.on('pause', function() {
 
-    self.emit('pause');
-    return;
-  });
-  this._stream.on('resume', function() {
+    return self.emit('pause');
+  }).on('resume', function() {
 
-    self.emit('resume');
-    return;
-  });
-  this._stream.on('open', function(fd) {
+    return self.emit('resume');
+  }).on('open', function(fd) {
 
-    self.emit('open', fd);
-    return;
-  });
-  this._stream.on('close', function() {
+    return self.emit('open', fd);
+  }).on('close', function() {
 
-    self.emit('close');
-    return;
-  });
-  this._stream.on('end', function() {
+    return self.emit('close');
+  }).on('end', function() {
 
-    self.emit('end');
-    return;
-  });
-  this._stream.on('error', function(err) {
+    return self.emit('end');
+  }).on('error', function(err) {
 
-    self.emit('error', err);
-    return;
+    return self.emit('error', err);
   });
 }
-inherits(STARTLINE, event);
+inherits(Startline, event);
+
 /**
  * _stream pause
  * 
  * @function pause
  */
-STARTLINE.prototype.pause = function() {
+Startline.prototype.pause = function() {
 
-  this._stream.pause();
-  return;
+  return this._stream.pause();
 };
+
 /**
  * _stream resume
  * 
  * @function resume
  */
-STARTLINE.prototype.resume = function() {
+Startline.prototype.resume = function() {
 
-  this._stream.resume();
-  return;
+  return this._stream.resume();
 };
+
 /**
  * read file with different limit
  * 
  * @function read
  * @param {Integer} start - starting bytes
  * @param {Integer} [end] - ending bytes
- * @return {STARTLINE}
+ * @return {Startline}
  */
-STARTLINE.prototype.read = function(start, end) {
+Startline.prototype.read = function(start, end) {
 
   var my = this.options;
   my.start = Number(start) || 0;
   my.end = Number(end);
-  return new STARTLINE(my);
+  return new Startline(my);
 };
