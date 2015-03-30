@@ -67,13 +67,11 @@ function interfac(options, start, end) {
  */
 function readlin(options, start, end) {
 
-  var go;
-  go = readline.createInterface({
+  return readline.createInterface({
     input: interfac(options, start, end),
     output: null,
     terminal: false,
   });
-  return go;
 }
 
 /**
@@ -93,8 +91,10 @@ function startline(opt) {
   if (Boolean(options.file)) {
     file = require('path').resolve(String(options.file));
     if (!fs.existsSync(file)) {
-      var err = file + ' not exists';
-      throw new Error(err);
+      throw new Error('file does not exist');
+    }
+    if (!fs.statSync(file).isFile()) {
+      throw new Error('path is not a file');
     }
   } else {
     throw new Error('"file" is required');
@@ -138,7 +138,7 @@ function Startline(options) {
   this.line = 0;
   this._stream = null;
 
-  if (options.rc4 || options.autokey) {
+  if (options.rc4 || options.autokey) { // cipher
     var cipher;
     this._stream = interfac(this.options, options.start, options.end);
     if (options.rc4) {
@@ -165,6 +165,7 @@ function Startline(options) {
         }
         return;
       });
+
     } else {
       cipher = require('autokey')(String(options.autokey), options.lodash);
       this._stream.on('data', function(callbacks) {
@@ -190,7 +191,8 @@ function Startline(options) {
         return;
       });
     }
-  } else if (options.end >= 0) {
+
+  } else if (options.end >= 0) { // no cipher, EOF
     this._stream = interfac(this.options, options.start, options.end);
     this._stream.on('data', function(callbacks) {
 
@@ -214,7 +216,8 @@ function Startline(options) {
       }
       return;
     });
-  } else {
+
+  } else { // file
     this._stream = readlin(this.options, options.start, options.end);
     this._stream.on('line', function(callback) {
 
@@ -225,6 +228,7 @@ function Startline(options) {
       return;
     });
   }
+
   // standard events
   this._stream.on('pause', function() {
 
