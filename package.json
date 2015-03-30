@@ -28,7 +28,7 @@
   "main": "index.min.js",
   "dependencies": {
     "arc4": "3.0.7",
-    "autokey": "2.0.4"
+    "autokey": "2.1.0"
   },
   "devDependencies": {
     "coveralls": "~2.11",
