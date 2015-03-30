@@ -142,7 +142,7 @@ function Startline(options) {
     var cipher;
     this._stream = interfac(this.options, options.start, options.end);
     if (options.rc4) {
-      cipher = require('arc4')(String(options.rc4), options.lodash);
+      cipher = require('arc4')('arc4', String(options.rc4), options.lodash);
       this._stream.on('data', function(callbacks) {
 
         var callback = cipher.decodeBuffer(callbacks).toString();
