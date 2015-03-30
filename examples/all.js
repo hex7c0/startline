@@ -2,7 +2,6 @@
 /**
  * @file read all file example
  * @module startline
- * @package startline
  * @subpackage examples
  * @version 0.0.1
  * @author hex7c0 <hex7c0@gmail.com>
@@ -12,26 +11,17 @@
 /*
  * initialize module
  */
-// import
-try {
-    var startline = require('../index.min.js'); // use require('startline') instead
-} catch (MODULE_NOT_FOUND) {
-    console.error(MODULE_NOT_FOUND);
-    process.exit(1);
-}
+var startline = require('..'); // use require('startline') instead
 
 // print lorem ipsum
 var readline = startline({
-    file: 'lorem.txt',
+  file: 'lorem.txt',
 });
 
-readline.on('line',function(line) {
+readline.on('line', function(line) {
 
-    console.log(line);
-    return;
-});
-readline.on('close',function(line) {
+  console.log(line);
+}).on('close', function(line) {
 
-    console.log('read ' + readline.head);
-    return;
+  console.log('read ' + readline.head);
 });
