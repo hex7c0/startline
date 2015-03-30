@@ -1,8 +1,10 @@
 # [startline](http://supergiovane.tk/#/startline)
 
-[![NPM version](https://badge.fury.io/js/startline.svg)](http://badge.fury.io/js/startline)
-[![Build Status](https://travis-ci.org/hex7c0/startline.svg?branch=master)](https://travis-ci.org/hex7c0/startline)
-[![Dependency Status](https://david-dm.org/hex7c0/startline/status.svg)](https://david-dm.org/hex7c0/startline)
+[![NPM version](https://img.shields.io/npm/v/startline.svg)](https://www.npmjs.com/package/startline)
+[![Linux Status](https://img.shields.io/travis/hex7c0/startline.svg?label=linux)](https://travis-ci.org/hex7c0/startline)
+[![Windows Status](https://img.shields.io/appveyor/ci/hex7c0/startline.svg?label=windows)](https://ci.appveyor.com/project/hex7c0/startline)
+[![Dependency Status](https://img.shields.io/david/hex7c0/startline.svg)](https://david-dm.org/hex7c0/startline)
+[![Coveralls](https://img.shields.io/coveralls/hex7c0/startline.svg)](https://coveralls.io/r/hex7c0/startline)
 
 Stream readline with starting and ending point for [nodejs](http://nodejs.org/).
 You can even encode a file with [rc4](https://github.com/hex7c0/arc4) cipher, or [autokey](https://github.com/hex7c0/autokey).
@@ -24,13 +26,12 @@ git clone git://github.com/hex7c0/startline.git
 inside nodejs project
 ```js
 var readline = startline({
-    file: 'lorem.txt'
+  file: 'lorem.txt'
 });
 
 readline.on('line',function(line) {
 
-    console.log(line);
-    return;
+  console.log(line);
 });
 ```
 
@@ -48,7 +49,7 @@ readline.tail
 
 restart reading (building a new Class)
 ```js
-readline.read(start,end)
+readline.read(start, end)
 ```
 
 ### startline(options)
@@ -69,6 +70,6 @@ related to http://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
 
 ## Examples
 
-Take a look at my [examples](https://github.com/hex7c0/startline/tree/master/examples)
+Take a look at my [examples](examples)
 
-### [License GPLv3](http://opensource.org/licenses/GPL-3.0)
+### [License GPLv3](LICENSE)
