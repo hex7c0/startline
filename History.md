@@ -1,3 +1,12 @@
+v1.4.0 / 2015-03-31
+==================
+
+  * Update `arc4`@3.1.0
+  * Update `autokey`@2.1.0
+  * `windows` test
+  * `iojs` test
+  * `coveralls` test
+
 v1.3.12 / 2015-01-24
 ==================
 
