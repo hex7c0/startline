@@ -74,6 +74,9 @@ function readlin(options, start, end) {
   });
 }
 
+/*
+ * class
+ */
 /**
  * export class
  * 
@@ -146,7 +149,7 @@ function Startline(options) {
       this._stream.on('data', function(callbacks) {
 
         var callback = cipher.decodeBuffer(callbacks).toString();
-        for (var i = 0, ii = callback.length; i < ii; i++) {
+        for (var i = 0, ii = callback.length; i < ii; ++i) {
           if (callback[i] === eol) {
             self.tail = self.head + self.line;
             self.head = self.tail + temp.length;
@@ -171,7 +174,7 @@ function Startline(options) {
       this._stream.on('data', function(callbacks) {
 
         var callback = cipher.decodeBuffer(callbacks).toString();
-        for (var i = 0, ii = callback.length; i < ii; i++) {
+        for (var i = 0, ii = callback.length; i < ii; ++i) {
           if (callback[i] === eol) {
             self.tail = self.head + self.line;
             self.head = self.tail + temp.length;
@@ -197,7 +200,7 @@ function Startline(options) {
     this._stream.on('data', function(callbacks) {
 
       var callback = callbacks.toString();
-      for (var i = 0, ii = callback.length; i < ii; i++) {
+      for (var i = 0, ii = callback.length; i < ii; ++i) {
         if (callback[i] === eol) {
           self.tail = self.head + self.line;
           self.head = self.tail + temp.length;
