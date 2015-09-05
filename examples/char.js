@@ -16,13 +16,13 @@ var startline = require('..'); // use require('startline') instead
 // print L
 var readline = startline({
   file: 'lorem.txt',
-  end: 0,
+  end: 0, // stop after 1° char
 });
 
 readline.on('line', function(line) {
 
-  console.log(line);
+  console.log(line); // print only one char
 }).on('close', function(line) {
 
-  console.log('read ' + readline.head);
+  console.log('read ' + readline.head); // print "1"
 });

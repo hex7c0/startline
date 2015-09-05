@@ -15,12 +15,11 @@ var startline = require('..'); // use require('startline') instead
 
 // print hello
 var readline = startline({
-  file: 'crypted_rc',
-  rc4: 'hex7c0',
-  encoding: null,
+  file: 'crypted_rc', // cipher text file
+  rc4: 'hex7c0', // arc4 password
 });
 
 readline.on('line', function(line) {
 
-  console.log(line);
+  console.log(line); // print plain text line
 });

@@ -13,15 +13,14 @@
  */
 var startline = require('..'); // use require('startline') instead
 
-// print lorem ipsum
 var readline = startline({
-  file: 'lorem.txt',
+  file: 'lorem.txt', // print lorem ipsum
 });
 
 readline.on('line', function(line) {
 
-  console.log(line);
+  console.log(line); // print every line
 }).on('close', function(line) {
 
-  console.log('read ' + readline.head);
+  console.log('read ' + readline.head); // print read lines
 });

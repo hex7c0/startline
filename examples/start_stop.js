@@ -15,7 +15,7 @@ var startline = require('..'); // use require('startline') instead
 
 // print third paragraph
 var readline = startline({
-  file: 'lorem.txt',
+  file: 'lorem.txt'
 });
 
 var c = 0;

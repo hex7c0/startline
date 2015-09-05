@@ -15,12 +15,11 @@ var startline = require('..'); // use require('startline') instead
 
 // print hello
 var readline = startline({
-  file: 'crypted_ak',
-  autokey: 'hex7c0',
-  encoding: null,
+  file: 'crypted_ak', // cipher text file
+  autokey: 'hex7c0', // autokey password
 });
 
 readline.on('line', function(line) {
 
-  console.log(line);
+  console.log(line); // print plain text line
 });
