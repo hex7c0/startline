@@ -1,5 +1,5 @@
 {
-  "version": "1.5.0",
+  "version": "1.5.1",
   "name": "startline",
   "description": "stream readline with starting point",
   "keywords": [
@@ -11,7 +11,7 @@
     "autokey"
   ],
   "preferGlobal": false,
-  "homepage": "http://supergiovane.tk/#/startline",
+  "homepage": "https://github.com/hex7c0/startline",
   "author": {
     "name": "hex7c0",
     "email": "hex7c0@gmail.com",

@@ -1,4 +1,4 @@
-# [startline](http://supergiovane.tk/#/startline)
+# [startline](https://github.com/hex7c0/startline)
 
 [![NPM version](https://img.shields.io/npm/v/startline.svg)](https://www.npmjs.com/package/startline)
 [![Linux Status](https://img.shields.io/travis/hex7c0/startline.svg?label=linux)](https://travis-ci.org/hex7c0/startline)
