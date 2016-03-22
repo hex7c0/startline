@@ -27,7 +27,7 @@
   },
   "main": "index.min.js",
   "dependencies": {
-    "arc4": "3.2.1",
+    "arc4": "3.3.0",
     "autokey": "2.2.1"
   },
   "devDependencies": {
