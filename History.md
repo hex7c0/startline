@@ -1,14 +1,21 @@
+v1.5.2 / 2016-03-22
+==================
+
+  * Tested against `node`@5.7
+  * Update `arc4`@3.3.0
+  * Update `autokey`@2.3.0
+
 v1.5.1 / 2015-11-03
 ==================
 
-  * Test `node`@5
+  * Tested against `node`@5
   * Update `arc4`@3.2.1
   * Update `autokey`@2.2.1
 
 v1.5.0 / 2015-09-05
 ==================
 
-  * Test `iojs`@3
+  * Tested against `iojs`@3
   * Update `arc4`@3.2.0
   * Update `autokey`@2.2.0
 
