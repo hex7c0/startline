@@ -28,7 +28,7 @@
   "main": "index.min.js",
   "dependencies": {
     "arc4": "3.3.7",
-    "autokey": "2.3.4"
+    "autokey": "2.3.6"
   },
   "devDependencies": {
     "grunt": "~1.0",
